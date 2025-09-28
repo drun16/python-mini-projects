@@ -1,54 +1,34 @@
 import random
 
-print("Number guessing game")
+def get_random_number(start: int = 1, end: int = 100) -> int:
+    """Generate a random number between start and end (inclusive)."""
+    return random.randint(start, end)
 
-# randint function to generate the
-# random number b/w 1 to 9
-number = random.randint(1, 9)
+def get_user_guess() -> int:
+    """Prompt the user for a guess and validate input."""
+    while True:
+        try:
+            return int(input("Enter your guess: "))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
-# number of chances to be given
-# to the user to guess the number
-# or it is the inputs given by user
-# into input box here number of
-# chances are 5
-chances = 0
+def play_game(start: int = 1, end: int = 100) -> None:
+    """Play the number guessing game."""
+    print(f"🎯 Guess the number between {start} and {end}")
+    target = get_random_number(start, end)
+    attempts = 0
 
-print("Guess a number (between 1 and 9):")
+    while True:
+        guess = get_user_guess()
+        attempts += 1
 
-# While loop to count the number
-# of chances
-while True:
+        if guess < target:
+            print("Too low! 📉")
+        elif guess > target:
+            print("Too high! 📈")
+        else:
+            print(f"✅ Correct! You guessed it in {attempts} tries.")
+            break
 
-    # Enter a number between 1 to 9
-    guess = int(input())
-
-    # Compare the user entered number
-    # with the number to be guessed
-    if guess == number:
-
-        # if number entered by user
-        # is same as the generated
-        # number by randint function then
-        # break from loop using loop
-        # control statement "break"
-        print(
-            f'CONGRATULATIONS! YOU HAVE GUESSED THE \
-            NUMBER {number} IN {chances} ATTEMPTS!')
-        # Printing final statement using the f-strings method;
-        break
-
-    # Check if the user entered
-    # number is smaller than
-    # the generated number
-    elif guess < number:
-        print("Your guess was too low: Guess a number higher than", guess)
-
-    # The user entered number is
-    # greater than the generated
-    # number
-    else:
-        print("Your guess was too high: Guess a number lower than", guess)
-
-    # Increase the value of chance by 1
-    chances += 1
-    
+if __name__ == "__main__":
+    play_game()
